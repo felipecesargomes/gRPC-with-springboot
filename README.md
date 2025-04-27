@@ -79,3 +79,25 @@ Características do gRPC
     </tr>
   </tbody>
 </table>
+
+## O que são Protocol Buffers (Protobuf) e por que usar?
+
+Protocol Buffers (ou protobuf) é um mecanismo desenvolvido pelo Google para serialização e desserialização eficiente de dados estruturados, utilizado principalmente na comunicação entre microsserviços.
+Por que não só JSON?
+
+JSON é amplamente utilizado para troca de dados por ser legível, fácil de debugar e suportado nativamente por browsers e diversas ferramentas. Porém, em arquiteturas com grande volume de requisições, JSON apresenta algumas limitações importantes:
+
+    Não otimizado para performance: Por ser texto, ocupa mais espaço na rede e consome mais CPU para serializar/desserializar.
+    Sem garantia de tipos: Falta type safety — difícil garantir estruturas de dados estáveis ao longo do tempo.
+    Mais lento e pesado: Tende a gerar payloads maiores, consumindo mais banda e recursos de máquina.
+
+Como o Protobuf resolve esses problemas?
+
+    Formato binário compacto: Os dados serializados com protobuf ocupam menos espaço, reduzindo o tráfego de rede entre serviços.
+    Alta performance: A serialização e desserialização são mais rápidas e menos custosas para a CPU, otimizando aplicações com alto volume de requisições.
+    Contrato forte: Define mensagens e serviços de forma clara em arquivos .proto, possibilitando geração de código para clientes e servidores em várias linguagens.
+    Segurança de tipos: Garante integridade dos dados e facilita evolução das APIs.
+
+Embora não seja “amigável para humanos” como o JSON (por ser binário), o Protobuf é altamente “amigável para máquinas”, sendo a escolha ideal para comunicação eficiente entre microsserviços.
+
+Neste repositório existem exemplos práticos comparando desempenho e aplicando Protocol Buffers, para demonstrar sua diferença e eficiência em relação ao uso tradicional de JSON
