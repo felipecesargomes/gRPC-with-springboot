@@ -1,6 +1,9 @@
 # gRPC com Java — Estudos e Conceitos (Exemplo prático)
 
 Este repositório foi criado para organizar estudos, exemplos e explanações sobre o uso de gRPC com Java em aplicações modernas de backend.
+
+![gRPC](.doc/gRPC-vs-REST-1.jpeg)
+
 O que é gRPC?
 
 gRPC (gRPC Remote Procedure Call) é um framework moderno, de código aberto, projetado pelo Google para facilitar a comunicação eficiente entre sistemas distribuídos, especialmente em arquiteturas de microsserviços. Seu principal objetivo é permitir que diferentes serviços — potencialmente escritos em diferentes linguagens — interajam de forma rápida, segura e padronizada.

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Identificação do projeto -->
+    <groupId>com.felipe</groupId> <!-- Define o grupo do projeto -->
+    <artifactId>grpc-playground</artifactId> <!-- Nome do artefato -->
+    <version>1.0-SNAPSHOT</version> <!-- Versão do projeto -->
+
+    <properties>
+        <!-- Configurações de versão e codificação -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <grpc.version>1.68.1</grpc.version> <!-- Versão do gRPC -->
+        <protoc.version>3.25.5</protoc.version> <!-- Versão do Protobuf -->
+        <logback.version>1.5.12</logback.version> <!-- Versão do Logback -->
+        <jackson.version>2.18.1</jackson.version> <!-- Versão do Jackson -->
+        <tomcat.annotations.version>6.0.53</tomcat.annotations.version> <!-- Versão do Tomcat -->
+        <os.maven.plugin.version>1.7.1</os.maven.plugin.version> <!-- Plugin para detectar SO -->
+        <protobuf.maven.plugin.version>0.6.1</protobuf.maven.plugin.version> <!-- Plugin Protobuf -->
+        <junit.version>5.11.3</junit.version> <!-- Versão do JUnit -->
+        <surefire.version>3.5.2</surefire.version> <!-- Plugin Surefire -->
+    </properties>
+
+    <dependencies>
+        <!-- Dependências relacionadas ao gRPC -->
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-netty-shaded</artifactId>
+            <version>${grpc.version}</version> <!-- Implementação Netty para gRPC -->
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-protobuf</artifactId>
+            <version>${grpc.version}</version> <!-- Suporte ao Protobuf no gRPC -->
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-stub</artifactId>
+            <version>${grpc.version}</version> <!-- Stubs para gRPC -->
+        </dependency>
+        <!-- Dependência necessária para Java 9+ -->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>annotations-api</artifactId>
+            <version>${tomcat.annotations.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Dependência para logging com Logback -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+        <!-- Dependência para manipulação de JSON com Jackson -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <!-- Dependências para testes com JUnit -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <extensions>
+            <!-- Plugin para detectar o sistema operacional -->
+            <extension>
+                <groupId>kr.motd.maven</groupId>
+                <artifactId>os-maven-plugin</artifactId>
+                <version>${os.maven.plugin.version}</version>
+            </extension>
+        </extensions>
+        <plugins>
+            <!-- Plugin para compilação do código -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>21</source> <!-- Versão do Java utilizada -->
+                    <target>21</target>
+                </configuration>
+            </plugin>
+            <!-- Plugin para execução de testes -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire.version}</version>
+            </plugin>
+            <!-- Plugin para compilação de arquivos Protobuf -->
+            <plugin>
+                <groupId>org.xolstice.maven.plugins</groupId>
+                <artifactId>protobuf-maven-plugin</artifactId>
+                <version>${protobuf.maven.plugin.version}</version>
+                <configuration>
+                    <protocArtifact>com.google.protobuf:protoc:${protoc.version}:exe:${os.detected.classifier}</protocArtifact>
+                    <pluginId>grpc-java</pluginId>
+                    <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
+                    <protoSourceRoot>
+                        ${basedir}/src/main/proto/ <!-- Diretório dos arquivos .proto -->
+                    </protoSourceRoot>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal> <!-- Compila os arquivos .proto -->
+                            <goal>compile-custom</goal> <!-- Gera código customizado -->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
